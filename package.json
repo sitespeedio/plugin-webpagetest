@@ -38,7 +38,11 @@
     "pug-lint": "2.6.0"
   },
   "dependencies": {
-    "webpagetest": "0.4.0"
+    "webpagetest": "0.4.0",
+    "lodash.clonedeep": "4.5.0",
+    "lodash.foreach": "4.5.0",
+    "lodash.get": "4.4.2",
+    "lodash.merge": "4.6.2"
   },
   "scripts": {
     "lint": "eslint . && npm run pug-lint",
