@@ -108,6 +108,9 @@ function isPublicWptHost(address) {
 }
 
 module.exports = {
+  name() {
+    return 'webpagetest';
+  },
   open(context, options) {
     // The context holds help methods to setup what we need in plugin
     // Get a log specificfor this plugin
