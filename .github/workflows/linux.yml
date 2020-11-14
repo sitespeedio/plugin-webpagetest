@@ -22,6 +22,9 @@ jobs:
         cd sitespeed.io
         npm install -g 
         cd ../plugin-webpagetest
+        npm install
+    - name: Lint
+      run: npm run lint
     - name: Run tests on WebPageTest
       run: sitespeed.io --plugins.add . --plugins.remove browsertime https://www.sitespeed.io/ --webpagetest.key ${{ secrets.WPT_KEY }}
     
