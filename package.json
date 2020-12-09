@@ -1,0 +1,53 @@
+{
+  "name": "@sitespeed.io/plugin-webpagetest",
+  "version": "0.1.0",
+  "description": "WebPageTest plugin for sitespeed.io",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sitespeedio/plugin-webpagetest.git"
+  },
+  "keywords": [
+    "sitespeed.io",
+    "webpagetest",
+    "webperf",
+    "perfmatters"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sitespeedio/plugin-webpagetest/issues"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.js": [
+      "npm run lint:fix",
+      "prettier --write --single-quote",
+      "git add"
+    ]
+  },
+  "devDependencies": {
+    "eslint": "6.2.2",
+    "eslint-config-prettier": "6.1.0",
+    "eslint-plugin-prettier": "3.1.0",
+    "husky": "3.0.4",
+    "lint-staged": "9.2.4",
+    "prettier": "1.18.2",
+    "pug-lint": "2.6.0"
+  },
+  "dependencies": {
+    "webpagetest": "0.4.0",
+    "lodash.clonedeep": "4.5.0",
+    "lodash.foreach": "4.5.0",
+    "lodash.get": "4.4.2",
+    "lodash.merge": "4.6.2"
+  },
+  "scripts": {
+    "lint": "eslint . && npm run pug-lint",
+    "lint:fix": "eslint . --fix",
+    "eslint-check": "eslint --print-config .eslintrc.json | eslint-config-prettier-check",
+    "pug-lint": "pug-lint pug/index.pug"
+  }
+}
