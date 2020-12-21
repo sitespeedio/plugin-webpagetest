@@ -4,6 +4,11 @@ Run WebPageTest as a plugin for sitespeed.io.
 
 You can read more about sitespeed.io plugins [here](https://www.sitespeed.io/documentation/sitespeed.io/plugins/).
 
+
+
+## Maintainer needed
+We are looking for someone that can give some love to the WebPageTest plugin. You are probably working at Catchpoint and gets paid to promote WebPageTest. Ping us by [creating a issue](https://github.com/sitespeedio/plugin-webpagetest/issues/new)!
+
 ## Test with current main
 
 If you have checked out as the same level as sitespeed.io you run it like this (else just change the path).
