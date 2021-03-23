@@ -46,6 +46,8 @@ const DEFAULT_PAGE_SUMMARY_METRICS = [
   // available only when --timeline option is required for chrome
   'data.median.*.chromeUserTiming.*',
   'data.median.*.cpuTimes.*',
+  'data.median.*.TotalBlockingTime',
+  'data.median.*.maxFID',
   // Cherry picked metrics for standard deviation
   'data.standardDeviation.*.SpeedIndex',
   'data.standardDeviation.*.render',
