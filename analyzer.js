@@ -75,7 +75,7 @@ module.exports = {
         // from "chromeUserTiming": [{"name": "unloadEventStart","time": 0}, …]
         // to "chromeUserTiming":{unloadEventStart:0, …}
         data.data.median.firstView.chromeUserTiming.forEach(measure => {
-          chromeUserTiming[measure.name] = measure.time || measure.value;
+          chromeUserTiming[measure.name] = measure.time || measure.value;
         });
         data.data.median.firstView.chromeUserTiming = chromeUserTiming;
         log.verbose(
