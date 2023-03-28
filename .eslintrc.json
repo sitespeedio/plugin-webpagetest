@@ -5,10 +5,11 @@
     "es6": true
   },
   "parserOptions": {
-    "ecmaVersion": 8
+    "ecmaVersion": "latest",
+    "sourceType": "module"
   },
-  "plugins": ["prettier"],
-  "extends": "eslint:recommended",
+  "plugins": ["prettier", "unicorn"],
+  "extends": ["eslint:recommended", "plugin:unicorn/recommended"],
   "rules": {
     "prettier/prettier": [
       "error",

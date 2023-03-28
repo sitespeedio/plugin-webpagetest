@@ -1,10 +1,8 @@
-'use strict';
-
-const forEach = require('lodash.foreach');
+import forEach from 'lodash.foreach';
 
 const metrics = ['TTFB', 'render', 'fullyLoaded', 'SpeedIndex'];
 
-class Aggregator {
+export class Aggregator {
   constructor(statsHelpers, log) {
     this.statsHelpers = statsHelpers;
     this.log = log;
@@ -73,6 +71,7 @@ class Aggregator {
         );
 
         forEach(viewData.custom, metricName => {
+          // eslint-disable-next-line unicorn/prefer-number-properties
           if (!isNaN(viewData[metricName]) && viewData[metricName] !== null) {
             // https://github.com/sitespeedio/sitespeed.io/issues/2985
             if (
@@ -173,5 +172,3 @@ class Aggregator {
     return summary;
   }
 }
-
-module.exports = Aggregator;
