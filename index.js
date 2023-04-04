@@ -1,14 +1,19 @@
-'use strict';
+import { parse, fileURLToPath } from 'node:url';
+import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
 
-const urlParser = require('url');
-const analyzer = require('./analyzer');
-const Aggregator = require('./aggregator');
-const forEach = require('lodash.foreach');
-const merge = require('lodash.merge');
-const get = require('lodash.get');
-const path = require('path');
-const WebPageTest = require('webpagetest');
-const fs = require('fs');
+import forEach from 'lodash.foreach';
+import merge from 'lodash.merge';
+import get from 'lodash.get';
+import { SitespeedioPlugin } from '@sitespeed.io/plugin';
+
+import { analyzeUrl } from './analyzer.js';
+import { Aggregator } from './aggregator.js';
+
+import wptpkg from 'webpagetest';
+const { defaultServer } = wptpkg;
+
+const __dirname = fileURLToPath(new URL('.', import.meta.url));
 
 // These are the metrics we want to save in
 // the time series database per pageSummary
@@ -91,7 +96,7 @@ function addCustomMetric(result, filterRegistry) {
 }
 
 const defaultConfig = {
-  host: WebPageTest.defaultServer,
+  host: defaultServer,
   location: 'Dulles:Chrome',
   connectivity: 'Cable',
   runs: 3,
@@ -106,13 +111,14 @@ const defaultConfig = {
 
 function isPublicWptHost(address) {
   const host = /^(https?:\/\/)?([^/]*)/i.exec(address);
-  return host && host[2] === urlParser.parse(WebPageTest.defaultServer).host;
+  return host && host[2] === parse(defaultServer).host;
 }
 
-module.exports = {
-  name() {
-    return 'webpagetest';
-  },
+export default class WebPageTestPlugin extends SitespeedioPlugin {
+  constructor(options, context, queue) {
+    super({ name: 'webpagetest', options, context, queue });
+  }
+
   open(context, options) {
     // The context holds help methods to setup what we need in plugin
     // Get a log specificfor this plugin
@@ -157,11 +163,9 @@ module.exports = {
       'webpagetest.run'
     );
 
-    this.pug = fs.readFileSync(
-      path.resolve(__dirname, 'pug', 'index.pug'),
-      'utf8'
-    );
-  },
+    this.pug = readFileSync(resolve(__dirname, 'pug', 'index.pug'), 'utf8');
+  }
+
   processMessage(message, queue) {
     const filterRegistry = this.filterRegistry;
     const make = this.make;
@@ -204,8 +208,7 @@ module.exports = {
       case 'url': {
         const url = message.url;
         let group = message.group;
-        return analyzer
-          .analyzeUrl(url, this.storageManager, this.log, wptOptions)
+        return analyzeUrl(url, this.storageManager, this.log, wptOptions)
           .then(result => {
             addCustomMetric(result, filterRegistry);
             if (result && result.trace) {
@@ -238,7 +241,7 @@ module.exports = {
                   make('webpagetest.run', run, {
                     url,
                     group,
-                    runIndex: parseInt(runKey) - 1
+                    runIndex: Number.parseInt(runKey) - 1
                   })
                 )
               );
@@ -271,10 +274,10 @@ module.exports = {
               );
             }
           })
-          .catch(err => {
-            this.log.error('Error creating WebPageTest result ', err);
+          .catch(error => {
+            this.log.error('Error creating WebPageTest result ', error);
             queue.postMessage(
-              make('error', err, {
+              make('error', error, {
                 url
               })
             );
@@ -297,6 +300,5 @@ module.exports = {
         }
       }
     }
-  },
-  config: defaultConfig
-};
+  }
+}

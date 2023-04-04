@@ -1,6 +1,7 @@
 {
   "name": "@sitespeed.io/plugin-webpagetest",
   "version": "0.1.0",
+  "type": "module",
   "description": "WebPageTest plugin for sitespeed.io",
   "repository": {
     "type": "git",
@@ -29,9 +30,10 @@
     ]
   },
   "devDependencies": {
-    "eslint": "6.2.2",
+    "eslint": "8.35.0",
     "eslint-config-prettier": "6.1.0",
     "eslint-plugin-prettier": "3.1.0",
+    "eslint-plugin-unicorn": "45.0.2",
     "husky": "3.0.4",
     "lint-staged": "9.2.4",
     "prettier": "1.18.2",
@@ -42,7 +44,8 @@
     "lodash.clonedeep": "4.5.0",
     "lodash.foreach": "4.5.0",
     "lodash.get": "4.4.2",
-    "lodash.merge": "4.6.2"
+    "lodash.merge": "4.6.2",
+    "@sitespeed.io/plugin": "0.0.6"
   },
   "scripts": {
     "lint": "eslint . && npm run pug-lint",
